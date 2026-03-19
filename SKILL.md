@@ -5,7 +5,7 @@ license: MIT
 allowed-tools: Bash
 ---
 
-# Gitmoji Commit
+# gitmoji-commit
 
 Create clean Git commits using **emoji + Conventional Commits** while keeping Git operations safe, scoped, and predictable.
 

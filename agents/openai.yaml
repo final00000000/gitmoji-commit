@@ -1,5 +1,5 @@
 interface:
-  display_name: "Gitmoji Commit"
+  display_name: "gitmoji-commit"
   short_description: "Portable git commit and release flow"
   default_prompt: "Use $gitmoji-commit to stage only the intended files, create a portable ASCII-safe Conventional Commit with optional emoji, avoid AI co-author trailers, and choose the right CLI flow for the current git host."
 

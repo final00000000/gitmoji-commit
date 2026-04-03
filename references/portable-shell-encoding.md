@@ -4,7 +4,7 @@ Use this file when the environment is Windows, PowerShell, mixed shells, or any 
 
 ## Default output mode
 
-Use **ASCII-only** by default for:
+Use **ASCII-safe Conventional Commit output** by default for:
 
 - commit titles
 - PR / MR titles
@@ -14,8 +14,9 @@ Use **ASCII-only** by default for:
 
 Examples:
 
-- `feat(ui): refine sidebar layout`
-- `fix(release): publish full changelog notes`
+- Default: `feat(auth): add token refresh handling`
+- Emoji mode: `✨ feat(auth): add token refresh handling`
+- Chinese default: `feat(auth): 增加令牌刷新处理`
 
 Switch to emoji mode only if the user explicitly wants it and UTF-8 rendering is clearly correct.
 Switch to Chinese text only if the user explicitly wants Chinese or the repo convention is Chinese and UTF-8 rendering is clearly correct.
@@ -50,7 +51,7 @@ printf '%s\n' '## Summary' '- item 1' '- item 2' > .git/TEMP_PR_BODY.md
 
 ## Commit title policy
 
-- Portable default: `type(scope): summary`
-- Emoji mode: `<emoji> type(scope): summary`
-- Chinese mode: `<emoji> type(scope): 中文描述`
-- If the host UI, CI logs, or terminal output are uncertain, use the portable default
+- Default: `type(scope): summary`
+- Emoji mode on explicit request: `<emoji> type(scope): summary`
+- Chinese mode: `type(scope): 中文描述`
+- If the host UI, CI logs, or terminal output are uncertain, use the ASCII-safe default

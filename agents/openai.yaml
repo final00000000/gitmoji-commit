@@ -1,7 +1,7 @@
 interface:
   display_name: "gitmoji-commit"
-  short_description: "Portable git commit and release flow"
-  default_prompt: "Use $gitmoji-commit to stage only the intended files, create a portable ASCII-safe Conventional Commit with optional emoji, avoid AI co-author trailers, and choose the right CLI flow for the current git host."
+  short_description: "Conventional Commit flow with optional full-catalog gitmoji"
+  default_prompt: "Use $gitmoji-commit to stage only the intended files, generate Conventional Commit titles by default, consult references/gitmoji-map.md when the user explicitly wants gitmoji or emoji output, keep ASCII-safe output when UTF-8 is unsafe, avoid AI co-author trailers, and choose the right CLI flow for the current git host."
 
 policy:
   allow_implicit_invocation: true

@@ -1,13 +1,15 @@
 ---
 name: gitmoji-commit
-description: Create portable git commits, PRs, and release flows with Conventional Commits and optional emoji. Use when the user asks to commit with icons, gitmoji, prettier history, avoid AI co-author attribution, work across multiple AI CLIs, or manage GitHub, GitLab, Azure DevOps, Gitea/Forgejo, Codeberg, and Bitbucket workflows. Supports ASCII-safe output, safe staging, mixed-state handling, cross-host CLI workflows, rebase/conflict recovery, initial-commit handling, amend/revert guidance, and optional push checks.
+description: Create portable git commits, PRs, and release flows with Conventional Commits by default and optional gitmoji enhancement from a full catalog. Use when the user asks to commit with icons, gitmoji, prettier history, avoid AI co-author attribution, work across multiple AI CLIs, or manage GitHub, GitLab, Azure DevOps, Gitea/Forgejo, Codeberg, and Bitbucket workflows. Supports full-catalog gitmoji selection, safe staging, mixed-state handling, cross-host CLI workflows, rebase/conflict recovery, initial-commit handling, amend/revert guidance, and ASCII-safe defaults.
 license: MIT
 allowed-tools: Bash
 ---
 
 # gitmoji-commit
 
-Create clean Git commits using **emoji + Conventional Commits** while keeping Git operations safe, scoped, and predictable.
+Create clean Git commits using **Conventional Commits by default** with **optional gitmoji enhancement from the full catalog** while keeping Git operations safe, scoped, and predictable.
+
+When the user explicitly wants gitmoji output, use `references/gitmoji-map.md` to prepend the most suitable emoji.
 
 For maximum compatibility, treat this as a **portable workflow spec**:
 
@@ -54,8 +56,9 @@ Do **not** use this skill when the user only wants:
 - Always check for unresolved conflicts before committing.
 - If push is requested, check branch/upstream state first; push normally only when safe.
 - Use `gh` only when installed and authenticated.
-- Default to ASCII-safe output on unknown terminals, unknown AI CLIs, or unknown host encodings.
-- Prefer one logical change per commit.
+- Default to Conventional Commit titles when generating commit / PR / release text.
+- Always consult `references/gitmoji-map.md` as the canonical full catalog when the user explicitly wants gitmoji or emoji output.
+- Fall back to plain ASCII output on unknown terminals, unknown AI CLIs, unknown host encodings, or whenever the user explicitly asks for ASCII-only text.
 
 ## AI attribution policy
 
@@ -69,10 +72,11 @@ Default posture: **no AI attribution**.
 
 ## Portability and encoding rules
 
-Default mode: **portable ASCII-safe**.
+Default mode: **portable Conventional Commit / ASCII-safe**.
 
-- Prefer plain ASCII commit / PR / release titles unless UTF-8 rendering is clearly safe.
-- Use emoji only when the user explicitly wants them **and** the terminal / host / toolchain is handling UTF-8 correctly.
+- Generate Conventional Commit titles by default.
+- Use gitmoji only when the user explicitly asks for emoji / gitmoji output and the terminal / host / toolchain is handling UTF-8 correctly.
+- When gitmoji is enabled, consult `references/gitmoji-map.md` and select the most specific matching emoji.
 - Support both English and Chinese commit text, but if encoding safety is uncertain, fall back to English ASCII.
 - If mojibake or garbled text appears once, immediately fall back to ASCII-only titles and notes.
 - Prefer plain Markdown and explicit CLI arguments over tool-specific hidden options.
@@ -195,9 +199,18 @@ git add -p path/to/file
 ```
 
 6. Choose title style:
-   - portable default -> plain Conventional Commit
-   - UTF-8 confirmed + user requested -> emoji + Conventional Commit from `references/gitmoji-map.md`
-7. Write the title in this format:
+   - default -> plain Conventional Commit
+   - if the user explicitly requests gitmoji / emoji -> prepend the best matching emoji from `references/gitmoji-map.md`
+   - if encoding is unsafe -> keep ASCII-only Conventional Commit output
+7. Write the title in one of these formats:
+
+Default:
+
+```text
+type[optional scope]: <description>
+```
+
+Emoji mode on explicit request:
 
 ```text
 <emoji> <type>[optional scope]: <description>
@@ -205,14 +218,14 @@ git add -p path/to/file
 
 Examples:
 
-- `✨ feat(schema-editor): simplify nested category editing`
-- `✨ feat(schema-editor): 优化分类编辑体验`
-- `🐛 fix(sidebar): remove harsh background corner`
-- `🐛 fix(sidebar): 修复侧边栏直角背景问题`
-- `📝 docs(release): polish release notes format`
-- `🔧 ci(actions): upgrade release workflow actions`
 - `feat(schema-editor): simplify nested category editing`
 - `feat(schema-editor): 优化分类编辑体验`
+- `fix(sidebar): remove harsh background corner`
+- `fix(sidebar): 修复侧边栏直角背景问题`
+- `✨ feat(schema-editor): simplify nested category editing`
+- `🐛 fix(sidebar): remove harsh background corner`
+- `🔒️ fix(auth): harden token verification`
+- `👷 ci(actions): refresh release workflow actions`
 
 8. Create the commit.
 
@@ -437,29 +450,36 @@ git commit -m "🔧 ci(actions): refresh workflow action versions"
 - Keep the title under 72 characters when possible.
 - Use present tense and imperative mood.
 - Prefer user-visible summaries over implementation trivia.
-- In portable mode, prefer plain ASCII Conventional Commit titles.
-- In emoji mode, put the emoji first, then Conventional Commit type.
-- In Chinese mode, keep the type token in English and write the description in Chinese.
-- Good Chinese example: `✨ feat(editor): 优化分类编辑交互`
-- Good English example: `✨ feat(editor): simplify category editing flow`
+- In default mode, use `type(scope): summary`.
+- In emoji mode, use `<emoji> <type>[scope]: <summary>` only when the user explicitly asks for gitmoji / emoji output.
+- In Chinese mode, keep the type token in English and write the summary in Chinese.
+- Good Chinese default example: `feat(editor): 优化分类编辑交互`
+- Good English default example: `feat(editor): simplify category editing flow`
+- Good Chinese emoji example: `✨ feat(editor): 优化分类编辑交互`
+- Good English emoji example: `✨ feat(editor): simplify category editing flow`
 - Use scope when it improves clarity.
 - Use `!` and a `BREAKING CHANGE:` footer only when the diff truly introduces a breaking change.
 - If the user only wants suggestions, provide 2-3 candidate titles instead of committing.
 
 ## Quick decision guide
 
-- Maximum compatibility -> `feat/fix/docs/...` with no emoji
-- New feature -> `✨ feat`
-- Bug fix -> `🐛 fix`
-- UI/style polish -> `🎨 style` or `✨ feat` if behavior is user-visible
-- Docs -> `📝 docs`
-- Refactor -> `♻️ refactor`
-- Performance -> `⚡ perf`
-- Tests -> `✅ test`
-- CI/workflows/tooling -> `🔧 ci`
-- Release/version bump -> `🚀 chore(release)`
-- Security fix -> `🔒 fix`
-- Removal/cleanup -> `🔥 chore` or `♻️ refactor`
+Default output is Conventional Commit. Use `references/gitmoji-map.md` when the user explicitly wants emoji / gitmoji output.
+
+- Maximum compatibility -> no emoji, use `feat/fix/docs/...`
+- New feature -> `feat`, optional emoji `✨`
+- Standard bug fix -> `fix`, optional emoji `🐛`
+- Critical hotfix -> `fix`, optional emoji `🚑️`
+- Docs -> `docs`, optional emoji `📝`
+- Refactor -> `refactor`, optional emoji `♻️`
+- Performance -> `perf`, optional emoji `⚡️`
+- Tests -> `test`, optional emoji `✅` or `🧪`
+- CI / workflows -> `ci`, optional emoji `👷` or `💚`
+- Dependencies -> `build` / `chore`, optional emoji `⬆️` `⬇️` `➕` `➖` `📌`
+- Security / privacy fix -> `fix`, optional emoji `🔒️`
+- Move / rename -> `refactor` / `chore`, optional emoji `🚚`
+- Breaking change -> use `!` / `BREAKING CHANGE:`, optional emoji `💥`
+- Accessibility -> `feat` / `fix`, optional emoji `♿️`
+- Validation -> `fix` / `feat`, optional emoji `🦺`
 
 ## Suggestion mode
 

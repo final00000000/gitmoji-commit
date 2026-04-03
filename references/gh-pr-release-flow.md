@@ -47,7 +47,7 @@ EOF
 gh pr create \
   --base main \
   --head "$(git branch --show-current)" \
-  --title "✨ feat(scope): short summary" \
+  --title "✨ add token refresh handling" \
   --body-file .git/TEMP_PR_BODY.md
 ```
 

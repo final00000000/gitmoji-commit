@@ -1,6 +1,6 @@
 # gitmoji-commit
 
-支持 git commit / PR / release 的可移植 skill，可选 moji，支持中文或英文提交，默认不添加 AI co-author 信息。
+支持 git commit / PR / release 的可移植 skill，内置全量 gitmoji catalog，默认使用 Conventional Commit，支持中文或英文提交，默认不添加 AI co-author 信息。
 
 [English README](./README.md)
 
@@ -31,5 +31,20 @@ npx skills add final00000000/gitmoji-commit
 ```
 
 该 skill 会先检查仓库状态、暂存区和 diff，
-再按 **Conventional Commits + 可选 gitmoji** 的方式生成提交信息，
-默认不附加 AI co-author。
+默认生成 **Conventional Commit 标题**。
+
+当用户明确要求 gitmoji / emoji 输出时，skill 会从 `references/gitmoji-map.md` 的**全量 gitmoji catalog** 中选择最合适的 emoji 并加到标题前面。
+如果环境明确无法安全显示 UTF-8，则保持 ASCII-only 的 Conventional Commit 输出。
+
+## 默认输出示例
+
+- `feat(auth): 增加令牌刷新处理`
+- `fix(config): 处理工作区路径缺失`
+- `refactor(paths): 重命名 skill 引用路径`
+- `ci(actions): 更新发布工作流动作`
+
+## Emoji 模式示例
+
+- `✨ feat(auth): 增加令牌刷新处理`
+- `🐛 fix(config): 处理工作区路径缺失`
+- `🔒️ fix(auth): 加固令牌校验`

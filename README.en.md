@@ -1,10 +1,8 @@
 # gitmoji-commit
 
-> Chinese documentation is shown by default on the GitHub homepage.
->
-> 中文文档请看： [README.md](./README.md)
+[简体中文](./README.md) | [English](./README.en.md)
 
-Portable git commit / PR / release skill with a full gitmoji catalog, Conventional Commits by default, Chinese or English commit text, and no AI co-author trailers by default.
+Portable git commit / PR / release skill with a full gitmoji catalog, using gitmoji + Conventional Commit by default, supporting Chinese or English commit text, and avoiding AI co-author trailers by default.
 
 ## Install
 
@@ -20,20 +18,19 @@ PR / release workflows are secondary extensions built on top of that commit-firs
 
 ## Default behavior
 
-- Default output: plain Conventional Commit, e.g. `feat(scope): summary`
-- If you explicitly ask for gitmoji / emoji: `✨ feat(scope): summary`
+- Default output: gitmoji + Conventional Commit, e.g. `✨ feat(scope): summary`
+- If you explicitly ask for no emoji / ASCII-only: fall back to plain Conventional Commit, e.g. `feat(scope): summary`
 - If shell / terminal / encoding safety is uncertain: ASCII-only Conventional Commit output
 - Commit and PR titles should keep the same chosen style unless you explicitly ask for a different style
 
 ## Trigger rules
 
-The skill should stay in plain Conventional Commit mode unless you explicitly ask for:
-- `gitmoji`
-- `emoji`
-- `icon`
-- `带图标`
-
-Requests like "make it prettier" or "make it nice" should not automatically enable emoji mode.
+When the user invokes this skill for commit-related work, the default style is gitmoji + Conventional Commit.
+Only disable emoji when the user explicitly asks for:
+- `no emoji`
+- `ASCII-only`
+- `plain Conventional Commit`
+- an explicit request to avoid icons / emoji
 
 ## What it checks before acting
 

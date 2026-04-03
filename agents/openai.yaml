@@ -1,7 +1,7 @@
 interface:
   display_name: "gitmoji-commit"
-  short_description: "Commit-first skill with optional gitmoji"
-  default_prompt: "Use $gitmoji-commit to inspect repository state, stage only the intended files, generate a plain Conventional Commit by default, enable emoji only when the user explicitly requests gitmoji or emoji output, fall back to ASCII-safe output on uncertainty, and treat GitHub via gh as the primary validated host workflow while using documented fallback behavior for other hosts."
+  short_description: "Commit-first skill using gitmoji by default"
+  default_prompt: "Use $gitmoji-commit to inspect repository state, stage only the intended files, generate gitmoji + Conventional Commit titles by default, fall back to plain Conventional Commit only when the user explicitly asks for no emoji or when encoding is unsafe, and treat GitHub via gh as the primary validated host workflow while using documented fallback behavior for other hosts."
 
 policy:
   allow_implicit_invocation: true

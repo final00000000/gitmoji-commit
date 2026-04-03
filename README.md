@@ -1,96 +1,95 @@
 # gitmoji-commit
 
-> 中文文档优先：请阅读 [README.zh-CN.md](./README.zh-CN.md)
+> 默认中文文档：请阅读 [README.zh-CN.md](./README.zh-CN.md)
 >
-> English documentation: see [README.md](./README.md) only if you need the English version.
+> Need English? Click here: [README.en.md](./README.en.md)
 
-Portable git commit / PR / release skill with a full gitmoji catalog, Conventional Commits by default, Chinese or English commit text, and no AI co-author trailers by default.
+支持 git commit / PR / release 的可移植 skill，内置全量 gitmoji catalog，默认使用 Conventional Commit，支持中文或英文提交，默认不添加 AI co-author 信息。
 
-## Install
+## 安装
 
 ```bash
 npx skills add final00000000/gitmoji-commit
 ```
 
-## What this skill does
+## 这个 skill 是做什么的
 
-This is a **commit-first** skill.
-Its default job is to inspect the repository state, stage only the intended files, and propose or create a safe Conventional Commit.
-PR / release workflows are secondary extensions built on top of that commit-first behavior.
+这是一个**以 commit 为核心**的 skill。
+它默认负责检查仓库状态、只暂存目标文件，并给出或执行安全的 Conventional Commit。
+PR / release 相关能力属于建立在 commit-first 之上的扩展工作流。
 
-## Default behavior
+## 默认行为
 
-- Default output: plain Conventional Commit, e.g. `feat(scope): summary`
-- If you explicitly ask for gitmoji / emoji: `✨ feat(scope): summary`
-- If shell / terminal / encoding safety is uncertain: ASCII-only Conventional Commit output
-- Commit and PR titles should keep the same chosen style unless you explicitly ask for a different style
+- 默认输出：plain Conventional Commit，例如 `feat(scope): summary`
+- 明确要求 gitmoji / emoji：`✨ feat(scope): summary`
+- shell / terminal / 编码环境不确定：回退到 ASCII-only Conventional Commit
+- commit title 与 PR title 默认沿用同一种风格，除非用户明确要求不同
 
-## Trigger rules
+## 触发规则
 
-The skill should stay in plain Conventional Commit mode unless you explicitly ask for:
+除非用户明确说出以下触发词，否则保持 plain Conventional Commit：
 - `gitmoji`
 - `emoji`
 - `icon`
 - `带图标`
 
-Requests like "make it prettier" or "make it nice" should not automatically enable emoji mode.
+像“好看一点”“prettier”这类模糊描述，不应自动开启 emoji 模式。
 
-## What it checks before acting
+## 执行前会检查什么
 
-- repository state (`git status --short`)
-- staged vs unstaged diff
-- whether only intended files are being staged
-- whether secrets or credentials are present
-- whether the repo is in an unusual state such as merge / rebase / conflict
-- whether host / encoding conditions are safe enough for emoji or non-ASCII output
+- 仓库状态（`git status --short`）
+- staged / unstaged diff
+- 是否只暂存了目标文件
+- 是否存在 secrets / credentials
+- 是否处于 merge / rebase / conflict 等异常状态
+- 当前 host / 编码环境是否足以安全输出 emoji 或非 ASCII 文本
 
-## Usage
+## 使用方式
 
-`gitmoji-commit` is a portable Git workflow skill for AI agents.
-It is **not a standalone CLI command** and is intended to be invoked
-in chat by agents that support skills, such as Codex or Claude Code.
+`gitmoji-commit` 是一个面向 AI Agent 的可移植 Git 工作流 skill。
+它**不是独立的 CLI 命令**，而是由支持 skills 的 Agent
+（如 Codex、Claude Code）在对话中调用。
 
-You can:
+你可以：
 
-- explicitly mention `gitmoji-commit` in your prompt
-- let agents such as **Codex / Claude Code** call the skill
+- 在提示词中**显式指定** `gitmoji-commit`
+- 让 **Codex / Claude Code** 等支持 skills 的 Agent 调用该 skill
 
 ```text
-Please use gitmoji-commit, inspect the current changes, and suggest 3 suitable commit titles.
+请使用 gitmoji-commit，检查当前改动后给我 3 个合适的 commit 标题候选。
 ```
 
 ```text
-Please use gitmoji-commit, stage only the relevant files, create a Chinese gitmoji commit, and commit without pushing.
+请使用 gitmoji-commit，只提交相关文件，生成中文 gitmoji commit，并直接提交，不要 push。
 ```
 
-## Common prompt patterns
+## 常见提示词
 
-- Suggest commit titles only
-- Commit the staged changes safely
-- Commit only the docs change
-- Create a Chinese Conventional Commit
-- Create a gitmoji commit explicitly
-- Commit and push
-- Prepare a PR after commit
+- 只要 commit 标题候选
+- 安全提交当前 staged 改动
+- 只提交 docs 改动
+- 生成中文 Conventional Commit
+- 明确生成 gitmoji commit
+- commit 并 push
+- commit 后继续准备 PR
 
-## Verified / intended environments
+## 已验证 / 目标环境
 
-Primary validated path:
+Primary validated path：
 - local git workflows
-- GitHub through `gh`
+- 通过 `gh` 的 GitHub 路径
 
-Intended / guidance-only paths until explicitly validated:
-- GitLab through `glab`
-- Azure DevOps through `az repos`
-- Gitea / Forgejo / Codeberg through `tea`
-- Bitbucket through git + web/API fallback
+在明确验证之前应视为 guidance / best-effort 的路径：
+- 通过 `glab` 的 GitLab
+- 通过 `az repos` 的 Azure DevOps
+- 通过 `tea` 的 Gitea / Forgejo / Codeberg
+- 通过 git + web/API fallback 的 Bitbucket
 
-Designed for skill-capable hosts such as Claude Code and Codex CLI.
-Current repository examples are verified as a portable workflow spec, but full launch readiness still depends on host-runtime validation across shell and encoding scenarios.
+本 skill 面向 Claude Code、Codex CLI 这类支持 skills 的 host。
+当前仓库提供的是可移植 workflow spec，是否达到上线标准仍取决于真实 host runtime、shell、编码场景下的验收结果。
 
-## Known limitations
+## 已知限制
 
-- This repository is a skill spec, not a standalone CLI.
-- POSIX and PowerShell examples are both documented, but host/runtime behavior must be validated in real environments.
-- Non-GitHub hosts should be treated as guidance-driven until explicitly validated in the launch test matrix.
-
+- 这个仓库是 skill 规范，不是独立 CLI。
+- 仓库已同时提供 POSIX 与 PowerShell 示例，但仍需要在真实 runtime 中验证行为一致性。
+- 对 GitHub 之外平台的支持，在没有通过完整测试矩阵前，应视为 guidance / best-effort，而不是已验证能力。

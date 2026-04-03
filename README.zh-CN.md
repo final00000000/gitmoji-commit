@@ -1,8 +1,10 @@
 # gitmoji-commit
 
-支持 git commit / PR / release 的可移植 skill，内置全量 gitmoji catalog，默认使用 Conventional Commit，支持中文或英文提交，默认不添加 AI co-author 信息。
+> 默认阅读中文文档。
+>
+> Need English? Click here: [README.md](./README.md)
 
-[English README](./README.md)
+支持 git commit / PR / release 的可移植 skill，内置全量 gitmoji catalog，默认使用 Conventional Commit，支持中文或英文提交，默认不添加 AI co-author 信息。
 
 ## 安装
 

@@ -1,8 +1,10 @@
 # gitmoji-commit
 
-Portable git commit / PR / release skill with a full gitmoji catalog, Conventional Commits by default, Chinese or English commit text, and no AI co-author trailers by default.
+> 中文文档优先：请阅读 [README.zh-CN.md](./README.zh-CN.md)
+>
+> English documentation: see [README.md](./README.md) only if you need the English version.
 
-[简体中文说明 / Chinese README](./README.zh-CN.md)
+Portable git commit / PR / release skill with a full gitmoji catalog, Conventional Commits by default, Chinese or English commit text, and no AI co-author trailers by default.
 
 ## Install
 

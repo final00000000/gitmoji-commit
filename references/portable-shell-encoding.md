@@ -2,6 +2,15 @@
 
 Use this file when the environment is Windows, PowerShell, mixed shells, or any terminal where emoji or non-ASCII text may render poorly.
 
+## Trusted operating mode summary
+
+When the shell, terminal, or encoding conditions are uncertain:
+
+- default to ASCII-safe Conventional Commit output
+- do not assume Bash heredocs or POSIX-only syntax
+- prefer English ASCII over risky non-ASCII output
+- if emoji or Chinese output garbles once, keep the rest of the task/session in ASCII-safe mode
+
 ## Default output mode
 
 Use **ASCII-safe Conventional Commit output** by default for:

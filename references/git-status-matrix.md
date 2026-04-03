@@ -2,6 +2,16 @@
 
 Use this file when repository state is not a simple "edit -> stage -> commit" flow.
 
+## Blocked-mode fallback
+
+If the repository is in an unusual or unresolved state, do not improvise a normal commit flow.
+Instead:
+
+1. report the detected state clearly
+2. explain why normal execution stopped
+3. provide the safest next step
+4. provide ready-to-use commit text only if it helps after the state is resolved
+
 ## Common states
 
 ### Clean working tree

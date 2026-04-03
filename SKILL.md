@@ -7,9 +7,36 @@ allowed-tools: Bash
 
 # gitmoji-commit
 
+**Mental model**
+
+- Default: plain Conventional Commit titles such as `feat(scope): summary`
+- If the user explicitly asks for gitmoji / emoji: prepend the best matching emoji, e.g. `✨ feat(scope): summary`
+- If shell / host / encoding safety is uncertain: fall back to ASCII-only Conventional Commit output
+- Keep the chosen style consistent across commit titles and PR titles unless the user explicitly wants a different style
+
 Create clean Git commits using **Conventional Commits by default** with **optional gitmoji enhancement from the full catalog** while keeping Git operations safe, scoped, and predictable.
 
 When the user explicitly wants gitmoji output, use `references/gitmoji-map.md` to prepend the most suitable emoji.
+
+## Core contract
+
+Primary validated path:
+- local git workflows
+- GitHub operations through `gh` when installed and authenticated
+
+Guidance-only paths until explicitly validated:
+- GitLab via `glab`
+- Azure DevOps via `az repos`
+- Gitea / Forgejo / Codeberg via `tea`
+- Bitbucket via git + web/API fallback
+
+The default responsibility of this skill is to:
+1. inspect repository state
+2. stage only the intended files
+3. propose or create a safe Conventional Commit
+4. optionally add gitmoji only when the user explicitly requests it
+
+PR / release / multi-host flows are extended workflows layered on top of that commit-first behavior.
 
 For maximum compatibility, treat this as a **portable workflow spec**:
 
@@ -60,6 +87,17 @@ Do **not** use this skill when the user only wants:
 - Always consult `references/gitmoji-map.md` as the canonical full catalog when the user explicitly wants gitmoji or emoji output.
 - Fall back to plain ASCII output on unknown terminals, unknown AI CLIs, unknown host encodings, or whenever the user explicitly asks for ASCII-only text.
 
+## Standard fallback policy
+
+When uncertain, downgrade rather than improvise:
+
+1. Unknown or unsafe encoding -> ASCII-only Conventional Commit output
+2. Missing host-specific CLI or failed auth -> stop host automation and provide ready-to-paste title/body/notes instead
+3. Merge / rebase / cherry-pick / conflict state -> stop the normal commit flow and explain the next safe step
+4. Mixed or unclear language convention -> use English ASCII by default or provide bilingual suggestions
+5. If emoji or non-ASCII output garbles once -> revert to ASCII-safe output for the rest of the task/session
+
+
 ## AI attribution policy
 
 Default posture: **no AI attribution**.
@@ -104,17 +142,19 @@ Language scope:
   - title in one primary language
   - body / notes with separate `ZH` and `EN` sections
 
-## CLI support
+## CLI and host confidence
 
-This skill is designed to operate through shell commands and supports:
+Primary validated workflow:
+- `git` CLI for local repository inspection, staging, and commits
+- `gh` for GitHub PR / release flows when installed and authenticated
 
-- `git` CLI — required
-- `gh` CLI — GitHub PR / release / changelog flows
-- `glab` CLI — GitLab MR / release flows when installed
-- `az repos` — Azure DevOps PR flows when installed and configured
-- `tea` CLI — Gitea / Forgejo style pull / release flows when installed
-- Bitbucket Cloud — use `git` + REST API / web flow if no first-party general-purpose CLI is available
-- Bash / sh style shell execution for examples
+Guidance-only workflows until explicitly validated:
+- `glab` for GitLab
+- `az repos` for Azure DevOps
+- `tea` for Gitea / Forgejo / Codeberg when host support is confirmed
+- Bitbucket via `git` + REST API / web fallback
+
+Shell examples in this file are primarily POSIX / Bash-flavored unless otherwise noted. On Windows or mixed-shell environments, use `references/portable-shell-encoding.md` for the safe default behavior.
 
 Quick checks:
 
@@ -198,11 +238,12 @@ git add path/to/file1 path/to/file2
 git add -p path/to/file
 ```
 
-6. Choose title style:
+6. Choose one title style for the task:
    - default -> plain Conventional Commit
    - if the user explicitly requests gitmoji / emoji -> prepend the best matching emoji from `references/gitmoji-map.md`
    - if encoding is unsafe -> keep ASCII-only Conventional Commit output
-7. Write the title in one of these formats:
+7. Reuse that style consistently for commit titles and PR titles unless the user explicitly wants a different style.
+8. Write the title in one of these formats:
 
 Default:
 

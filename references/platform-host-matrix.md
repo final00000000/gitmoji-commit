@@ -55,7 +55,14 @@ Common patterns:
 - Use app passwords / tokens or other supported auth for API automation
 - Do not assume a first-party CLI equivalent to `gh` / `glab`
 
-## Safe fallback
+## Validation status
+
+- GitHub: primary validated target for PR / release flows
+- GitLab: guidance until explicitly validated in the launch matrix
+- Azure DevOps: guidance until explicitly validated in the launch matrix
+- Gitea / Forgejo / Codeberg: guidance until explicitly validated in the launch matrix
+- Bitbucket Cloud: guidance until explicitly validated in the launch matrix
+
 
 If no host-specific CLI is available:
 

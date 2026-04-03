@@ -126,7 +126,7 @@ Emoji mode when the user explicitly asks for gitmoji / emoji output:
 
 ## Examples
 
-Default gitmoji-native style:
+Gitmoji-native examples when the user explicitly asks for a pure gitmoji style title:
 
 - `✨ add token refresh handling`
 - `🐛 fix missing workspace path handling`
@@ -134,7 +134,7 @@ Default gitmoji-native style:
 - `💥 remove legacy commit title fallback`
 - `👷 refresh release workflow automation`
 
-Compatibility mode on request:
+Emoji + Conventional Commit mode on request:
 
 - `✨ feat(auth): add token refresh handling`
 - `🐛 fix(config): handle missing workspace path`

@@ -27,7 +27,9 @@ If the remote is not GitHub, go back and use `platform-host-matrix.md` instead.
 git push -u origin "$(git branch --show-current)"
 ```
 
-2. Prepare a clean PR body file:
+2. Prepare a clean PR body file.
+
+### POSIX / Bash example
 
 ```bash
 cat > .git/TEMP_PR_BODY.md <<'EOF'
@@ -41,13 +43,31 @@ cat > .git/TEMP_PR_BODY.md <<'EOF'
 EOF
 ```
 
-3. Create the PR with explicit text:
+### PowerShell example
+
+```powershell
+@"
+## Summary
+- item 1
+- item 2
+
+## Testing
+- test 1
+- test 2
+"@ | Set-Content -Path .git/TEMP_PR_BODY.md
+```
+
+3. Create the PR with explicit text.
+
+Prefer a Conventional Commit-style title by default. Use an emoji-prefixed title only when the user explicitly requests gitmoji / emoji output.
+
+### POSIX / Bash example
 
 ```bash
 gh pr create \
   --base main \
   --head "$(git branch --show-current)" \
-  --title "✨ add token refresh handling" \
+  --title "feat(auth): add token refresh handling" \
   --body-file .git/TEMP_PR_BODY.md
 ```
 
@@ -79,7 +99,9 @@ git tag -a v1.2.3 -m "v1.2.3"
 git push origin v1.2.3
 ```
 
-3. Write a manual notes file when the user wants a full changelog:
+3. Write a manual notes file when the user wants a full changelog.
+
+### POSIX / Bash example
 
 ```bash
 cat > release-notes.md <<'EOF'
@@ -101,6 +123,30 @@ cat > release-notes.md <<'EOF'
 ## Docs / Build / CI
 - item
 EOF
+```
+
+### PowerShell example
+
+```powershell
+@"
+## Highlights
+- key highlight
+
+## Added
+- item
+
+## Changed
+- item
+
+## Fixed
+- item
+
+## Refactor / Performance
+- item
+
+## Docs / Build / CI
+- item
+"@ | Set-Content -Path release-notes.md
 ```
 
 4. Create the release with manual notes:
